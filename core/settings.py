@@ -23,10 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-d^6-65jljs(0@j_gt$_)u3brtxfso%c0ouln(4tzj6t0vv$jie'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+import os
+from dotenv import load_dotenv
 
-ALLOWED_HOSTS = []
+# Загружаем .env только для локальной разработки (необязательно, но безопасно)
+# На Render .env не нужен — переменные уже в системе
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
+# Получаем ALLOWED_HOSTS из переменной среды и разбиваем по запятым
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # Application definition
 
